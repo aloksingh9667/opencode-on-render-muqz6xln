@@ -122,6 +122,8 @@ The template uses Render's `standard` plan by default.
 
 opencode can exceed the memory available on `starter`, especially with the web UI, provider metadata, plugins, MCP tools, and active coding sessions.
 
+> ⚠️ The Free plan (512 MB RAM) **will crash** with `Ran out of memory` — opencode cannot run in 512 MB. Minimum is `starter`, `standard` (the `render.yaml` default) is recommended. If you deployed manually as a Free web service, change it in the dashboard: service → Settings → Instance Type → `Starter` or higher, then redeploy. Deploying via Blueprint (`New → Blueprint`, select this repo) applies `render.yaml` and its `standard` plan automatically.
+
 ## What's pre-wired
 
 The image installs the Render OpenCode plugin from GitHub. It adds:
