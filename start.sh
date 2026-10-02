@@ -129,6 +129,13 @@ if (!config || typeof config !== "object" || Array.isArray(config)) {
 }
 
 config.$schema = config.$schema || "https://opencode.ai/config.json";
+
+// Default model: Muse Spark 1.3 (free via OpenRouter).
+// OPENCODE_MODEL overrides it; an existing on-disk setting always wins
+// so manual /models choices on the persistent disk are preserved.
+const defaultModel = process.env.OPENCODE_MODEL || "openrouter/opencode/muse-spark-1.3-contributor-free";
+config.model = config.model || defaultModel;
+config.small_model = config.small_model || defaultModel;
 config.mcp = config.mcp && typeof config.mcp === "object" && !Array.isArray(config.mcp)
   ? config.mcp
   : {};
@@ -184,6 +191,17 @@ ensure_workspace_project
 write_auth_file
 write_global_config
 write_project_config_if_missing
+
+# Log the effective default model (never prints secrets).
+EFFECTIVE_MODEL="${OPENCODE_MODEL:-openrouter/opencode/muse-spark-1.3-contributor-free}"
+echo "Starting OpenCode..."
+echo "Port: ${PORT:-10000}"
+echo "Host: 0.0.0.0"
+echo "Default model: ${EFFECTIVE_MODEL}"
+
+if [ -z "${OPENROUTER_API_KEY:-}" ]; then
+  echo "Warning: OPENROUTER_API_KEY is not set; the default free model will fail until you set it." >&2
+fi
 
 case "$OPENCODE_SERVER_COMMAND" in
   web|serve)

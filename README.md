@@ -98,6 +98,14 @@ The service writes these keys into `/root/project-data/opencode/auth.json` using
 
 Anthropic OAuth is not supported in this hosted setup. Use `ANTHROPIC_API_KEY`.
 
+## Default model: Muse Spark 1.3 (free)
+
+The service boots with `openrouter/opencode/muse-spark-1.3-contributor-free` as both `model` and `small_model`.
+
+- Set `OPENROUTER_API_KEY` in Render (required — even free OpenRouter models reject keyless requests). Get one at `https://openrouter.ai/keys`.
+- Change the default with `OPENCODE_MODEL=provider/model` (already in `render.yaml`; edit it in the Render dashboard).
+- A model already saved on the persistent disk always wins, so `/models` choices are preserved across deploys.
+
 ## Security notes
 
 This template gives you a remote coding agent, not a hardened sandbox.
